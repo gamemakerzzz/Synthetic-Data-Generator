@@ -11,7 +11,7 @@ import re
 from datetime import datetime, date
 import json
 
-from utils.database import get_schema_metadata
+from src.utils.database import get_schema_metadata
 
 class DataCategory(Enum):
     PERSONAL = "personal"
@@ -337,9 +337,9 @@ class SchemaAnalyser:
         if column.foreign_keys:
             constraints.append('FOREIGN KEY')
         if column.default:
-            constraints.append(f'DEFAULT {column.default.arg}')  
-        if hasattr(column.type,'length')  and column.type.length:
-            constraints.append(f'MAX_LENGTH({column.type.length})')
+            constraints.append(f'DEFAULT {column.default.arg}')   # type: ignore
+        if hasattr(column.type,'length')  and column.type.length: # type: ignore
+            constraints.append(f'MAX_LENGTH({column.type.length})') # type: ignore
         return constraints
         
     def _analyze_column(self,column:Column)->ColumnAnalysis:
@@ -349,7 +349,7 @@ class SchemaAnalyser:
         unique = column.unique or column.primary_key
         primary_key = column.primary_key
         max_length = getattr(column.type,'length',None)
-        default_value = column.default.arg if column.default else None
+        default_value = column.default.arg if column.default else None # type: ignore
         foreign_key = None
         if column.foreign_keys:
             fk = list(column.foreign_keys)[0]
@@ -634,15 +634,9 @@ def get_generation_config_for_data_generator(analysis_result:SchemaAnalysisResul
     return config
 
 if __name__ == "__main__":
-    # This would be used for testing with your database module
     try:
-        # Analyze schema
         analysis_result = analyze_database_schema()
-        
-        # Export full analysis
-        export_analysis_config(analysis_result, 'schema_analysis.json')
-        
-        # Get config for data generator
+        export_analysis_config(analysis_result, 'src/output/schema_analysis.json')
         generator_config = get_generation_config_for_data_generator(analysis_result)
         
         print(f"Analysis complete!")
