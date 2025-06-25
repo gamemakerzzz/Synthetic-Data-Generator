@@ -444,3 +444,23 @@ class DataGenerator:
                 'columns' : list(records[0].keys()) if records else []
             }
         return summary
+    
+    def generate_data_from_schema(config: Optional[Dict] = None,
+                                  records_per_table: Union[int, Dict[str,int]]=100,
+                                  locale: str = 'en_US',
+                                  output_format: str = 'json')->Dict[str, Any]:
+        
+        print("Analyzing database schema...")
+        analysis_result = analyze_database_schema(config)
+        generator = DataGenerator(config, locale)
+
+        print(f"Generating data for {len{analysis_result.tables}} tables...")
+        generated_data = generator.generate_schema_data(analysis_result, records_per_table)
+        generator.export_data(output_format)
+
+        summary = generator.get_generation_summary()
+        print(f"\nGeneration complete!")
+        print(f"Tables generated: {summary['total_tables']}")
+        print(f"Total records: {summary['total_records']}")
+
+        return summary
