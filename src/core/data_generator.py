@@ -383,3 +383,21 @@ class DataGenerator:
             self._store_primary_key_values(table_name, record, table_config)
         self.context.generated_data[table_name] = records
         return records
+
+    def generate_schema_data(self, analysis_result: SchemaAnalysisResult,
+                             records_per_table: Union[int, Dict[str,int]] = 100)->Dict[str, List[Dict[str, Any]]]:
+        generation_config = get_generation_config_for_data_generator(analysis_result)
+
+        if isinstance(records_per_table, int):
+            table_record_counts = {table: records_per_table for table in generation_config['generation_order']}
+        else:
+            table_record_counts = records_per_table
+
+        for table_name in generation_config['generation_order']:
+            if table_name in generation_config['tables']:
+                table_config = generation_config['tables'][table_name]
+                num_records = table_record_counts.get(table_name,100)
+                print(f"Generating {num_records} records for table : {table_name}")
+                self.generate_table_data(table_name, table_config, num_records)
+        
+        return self.context.generated_data
