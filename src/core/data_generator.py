@@ -360,3 +360,26 @@ class DataGenerator:
 
                 if record[column_name] is not None:
                     self.context.primary_key_pools[table_name][column_name].add(record[column_name])
+
+    def generate_table_data(self, table_name:str, table_config: Dict[str, Any],
+                            num_records: int = 100)->List[Dict[str, Any]]:
+        records = []
+        unique_trackers = {}
+
+        for column_name, column_config in table_config['column'].items():
+            if column_config.get('unique',False):
+                unique_trackers[column_name] = set()
+        
+        for i in range(num_records):
+            record = {}
+            for column_name, column_config in table_config['columns'].items():
+                existing_values = unique_trackers.get(column_name)
+                value = self._generate_column_value(
+                    column_name,column_config,table_name,existing_values
+                )
+                record[column_name] = value
+
+            records.append(record)
+            self._store_primary_key_values(table_name, record, table_config)
+        self.context.generated_data[table_name] = records
+        return records
