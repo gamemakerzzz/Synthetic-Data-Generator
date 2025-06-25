@@ -16,7 +16,7 @@ except ImportError:
     print("Warning: Faker not available. Install with : pip install faker")
 
 try:
-    from mimesis import Person,Address, Generic, Datetime, Text, Internet, Finance
+    from mimesis import Person,Address, Generic, Datetime, Text, Internet, Finance,Numeric
     from mimesis.locales import Locale
     MIMESIS_AVAILABLE = True
 except ImportError:
@@ -29,7 +29,7 @@ from src.core.schema_analyzer import SchemaAnalysisResult, analyze_database_sche
 class GenerationContext:
     generated_data: Dict[str, List[Dict[str, Any]]]
     primary_key_pools: Dict[str, Dict[str, Set[Any]]]
-    current_locale = str
+    current_locale : str
     faker_instance: Optional[Any] = None
     mimesis_providers: Optional[Dict[str, Any]] = None
 
@@ -41,7 +41,7 @@ class DataGenerator:
         self.context = GenerationContext(
             generated_data={},
             primary_key_pools={},
-            current_locale=locale
+            current_locale = locale
         )
 
         self._init_faker()
@@ -87,7 +87,8 @@ class DataGenerator:
             'text': Text(mimesis_locale),
             'internet': Internet(),
             'finance': Finance(),
-            'generic': Generic(mimesis_locale)
+            'generic': Generic(mimesis_locale),
+            'numeric': Numeric()
         }
     
     def _init_library_preferences(self):
@@ -142,7 +143,7 @@ class DataGenerator:
             return True
         
         method = column_config.get('method', '')
-        if self.faker_prefernces['methods'].get(method):
+        if self.faker_preferences['methods'].get(method):
             return True
         
         return False
@@ -203,11 +204,11 @@ class DataGenerator:
                         return method_func(start_date=f'{start_year}-01-01', end_date=f'{end_year}-12-31')
                     else:
                         return method_func(start_date=f'{start_year}-01-01', end_date=f'{end_year}-12-31')
-                    
+                  
                 elif faker_method == 'sentence':
                     nb_words =params.get('nb_words', 6)
                     return method_func(nb_words=nb_words)
-                
+
                 elif faker_method == 'text':
                     max_nb_chars = params.get('max_nb_chars', 200)
                     return method_func(max_nb_chars=max_nb_chars)
@@ -236,7 +237,7 @@ class DataGenerator:
             'text': 'text',
             'internet': 'internet',
             'finance': 'finance',
-            'numbers': 'numbers',
+            'numeric': 'numeric',
             'custom': 'generic'
         }
 
@@ -261,8 +262,7 @@ class DataGenerator:
                     return method_func(start=start, end=end)
                 
                 elif method == 'sentence':
-                    nb_words = params.get('nb_words', 6)
-                    return method_func(nb_words=nb_words)
+                    return method_func()
                 
                 elif method== 'text':
                     quantity = params.get('quantity', 1)
@@ -366,7 +366,7 @@ class DataGenerator:
         records = []
         unique_trackers = {}
 
-        for column_name, column_config in table_config['column'].items():
+        for column_name, column_config in table_config['columns'].items():
             if column_config.get('unique',False):
                 unique_trackers[column_name] = set()
         
@@ -428,9 +428,9 @@ class DataGenerator:
     def get_generation_summary(self)->Dict[str, Any]:
         summary = {
             'total_tables': len(self.context.generated_data),
-            'total_records': sum(len(records)for records in self.context.generated_data),
+            'total_records': sum(len(records)for records in self.context.generated_data.values()),
             'tables': {},
-            'generation_timestamp': datetime.now().isoforamt(),
+            'generation_timestamp': datetime.now().isoformat(),
             'locale': self.locale,
             'libraries_used':{
                 'faker': FAKER_AVAILABLE,
@@ -445,22 +445,36 @@ class DataGenerator:
             }
         return summary
     
-    def generate_data_from_schema(config: Optional[Dict] = None,
-                                  records_per_table: Union[int, Dict[str,int]]=100,
-                                  locale: str = 'en_US',
-                                  output_format: str = 'json')->Dict[str, Any]:
-        
-        print("Analyzing database schema...")
-        analysis_result = analyze_database_schema(config)
-        generator = DataGenerator(config, locale)
+def generate_data_from_schema(config: Optional[Dict] = None,
+                                records_per_table: Union[int, Dict[str,int]]=100,
+                                locale: str = 'en_US',
+                                output_format: str = 'json')->Dict[str, Any]:
+    
+    print("Analyzing database schema...")
+    analysis_result = analyze_database_schema(config)
+    generator = DataGenerator(config, locale)
 
-        print(f"Generating data for {len{analysis_result.tables}} tables...")
-        generated_data = generator.generate_schema_data(analysis_result, records_per_table)
-        generator.export_data(output_format)
+    print(f"Generating data for {len(analysis_result.tables)} tables...")
+    generated_data = generator.generate_schema_data(analysis_result, records_per_table)
+    generator.export_data(output_format)
 
-        summary = generator.get_generation_summary()
-        print(f"\nGeneration complete!")
-        print(f"Tables generated: {summary['total_tables']}")
-        print(f"Total records: {summary['total_records']}")
+    summary = generator.get_generation_summary()
+    print(f"\nGeneration complete!")
+    print(f"Tables generated: {summary['total_tables']}")
+    print(f"Total records: {summary['total_records']}")
 
-        return summary
+    return summary
+    
+if __name__ == "__main__":
+    try:
+        summary = generate_data_from_schema(
+            records_per_table = 50,
+            locale = 'ar_TN',
+            output_format = 'json'
+        )
+
+        with open('src/output/generation_summary.json','w') as f:
+            json.dump(summary,f,indent=2,default=str)
+
+    except Exception as e:
+        print(f"Error during data generation: {e}")
