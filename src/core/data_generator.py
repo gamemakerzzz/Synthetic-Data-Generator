@@ -423,3 +423,24 @@ class DataGenerator:
                         writer.writeheader()
                         writer.writerows(records)
                     print(f"Exported {len(records)} records to {file_path}")
+
+
+    def get_generation_summary(self)->Dict[str, Any]:
+        summary = {
+            'total_tables': len(self.context.generated_data),
+            'total_records': sum(len(records)for records in self.context.generated_data),
+            'tables': {},
+            'generation_timestamp': datetime.now().isoforamt(),
+            'locale': self.locale,
+            'libraries_used':{
+                'faker': FAKER_AVAILABLE,
+                'mimesis':MIMESIS_AVAILABLE
+            }
+        }
+
+        for table_name, records in self.context.generated_data.items():
+            summary['tables'][table_name] = {
+                'record_count' : len(records),
+                'columns' : list(records[0].keys()) if records else []
+            }
+        return summary
