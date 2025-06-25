@@ -38,7 +38,7 @@ class DataGenerator:
     def __init__(self, config: Optional[Dict] = None, locale: str = 'en_US'):
         self.config= config or {}
         self.locale  = locale
-        self.contect = GenerationContext(
+        self.context = GenerationContext(
             generated_data={},
             primary_key_pools={},
             current_locale=locale
@@ -78,7 +78,7 @@ class DataGenerator:
         'fr_FR': Locale.FR
         }
 
-        mimesis_locale = locale_mapping.get(self.locale,locale.AR_TN)
+        mimesis_locale = locale_mapping.get(self.locale,Locale.AR_TN)
 
         self.context.mimesis_providers = {
             'person' : Person(mimesis_locale),
@@ -297,13 +297,13 @@ class DataGenerator:
         print(f"Warning: No available foreign key values for {column_name}->{referenced_table}.{referenced_column}")
         return None
     
-    def _handle_custom_values(self, column_config:Dict[str, Any])->Any;
+    def _handle_custom_values(self, column_config:Dict[str, Any])->Any:
         custom_values = column_config.get('custom_values')
         if custom_values and isinstance(custom_values, list):
             return random.choice(custom_values)
         return None
     
-    def _should_generate_null(self, column_config: Dic[str, Any])-> bool:
+    def _should_generate_null(self, column_config: Dict[str, Any])-> bool:
         if not column_config.get('nullable',True):
             return False
         
@@ -347,3 +347,16 @@ class DataGenerator:
             return f"{column_name}_{uuid.uuid4().hex[:8]}"
         
         return value
+
+    def _store_primary_key_values(self, table_name: str,record: Dict[str, Any],
+                                  table_config: Dict[str, Any]):
+        if table_name not in self.context.primary_key_pools:
+            self.context.primary_key_pools[table_name] = {}
+
+        for column_name, column_config in table_config['columns'].items():
+            if column_name in record:
+                if column_name not in self.context.primary_key_pools[table_name]:
+                    self.context.primary_key_pools[table_name][column_name] = set()
+
+                if record[column_name] is not None:
+                    self.context.primary_key_pools[table_name][column_name].add(record[column_name])
