@@ -401,3 +401,25 @@ class DataGenerator:
                 self.generate_table_data(table_name, table_config, num_records)
         
         return self.context.generated_data
+    
+    def export_data(self, output_format: str = 'json', output_dir: str = 'src/output/generated_data'):
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+
+        if output_format.lower() == 'json':
+            for table_name, records in self.context.generated_data.items():
+                file_path=output_path/f"{table_name}.json"
+                with open(file_path,'w', encoding='utf-8') as f:
+                    json.dump(records,f,indent=2,ensure_ascii=False,default=str)
+                print(f"Exported {len(records)} records to {file_path}")
+
+        elif output_format.lower() == 'csv':
+            import csv
+            for table_name, records in self.context.generated_data.items():
+                if records:
+                    file_path = output_path/f"{table_name}.csv"
+                    with open(file_path,'w',newline='',encoding='utf-8') as f:
+                        writer = csv.DictWriter(f, fieldnames=records[0].keys())
+                        writer.writeheader()
+                        writer.writerows(records)
+                    print(f"Exported {len(records)} records to {file_path}")
