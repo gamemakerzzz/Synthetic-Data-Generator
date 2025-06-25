@@ -158,7 +158,6 @@ class SchemaAnalyser:
                 'params': {'length': 12}
             },
             
-            # Address Information
             'address': {
                 'patterns': [r'.*address.*', r'.*addr.*', r'.*adresse.*'],
                 'category': DataCategory.ADDRESS,
@@ -354,7 +353,7 @@ class SchemaAnalyser:
         if column.foreign_keys:
             fk = list(column.foreign_keys)[0]
             foreign_key = {
-                'refrenced_table' : fk.column.table.name,
+                'referenced_table' : fk.column.table.name,
                 'referenced_column' : fk.column.name
             }
         pattern_info = self._detect_column_pattern(column.name.lower())
