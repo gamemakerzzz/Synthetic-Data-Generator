@@ -4,8 +4,8 @@ from sqlalchemy import Engine, create_engine, MetaData ,URL
 from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from tenacity import before_log, retry,stop_after_attempt,wait_fixed,retry_if_exception_type
 from typing import  Dict,Optional
-
 logger =logging.getLogger(__name__)
+
 def _mask_password(url_str:str)->str:
     import re
     return re.sub(r'://([^:]+):([^@]+)@', r'://\1:***@', url_str)
