@@ -1,0 +1,2469 @@
+{
+  "tables": [
+    {
+      "name": "billet",
+      "columns": [
+        {
+          "name": "ID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "dateAchat",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        },
+        {
+          "name": "prix",
+          "sql_type": "DOUBLE",
+          "python_type": "float",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "financial",
+          "provider_type": "numbers",
+          "mimesis_method": "float_number",
+          "method_params": {
+            "start": 1,
+            "end": 1000,
+            "precision": 2
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "price",
+          "constraints": []
+        },
+        {
+          "name": "typeBillet",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "statut",
+          "sql_type": "VARCHAR(20)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 20,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "sentence",
+          "method_params": {
+            "nb_words": 3
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(20)"
+          ]
+        },
+        {
+          "name": "quantite",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "integer_number",
+          "method_params": {
+            "start": 1,
+            "end": 100000
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        },
+        {
+          "name": "eventID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "event",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "ID"
+      ],
+      "foreign_keys": {
+        "eventID": {
+          "referenced_table": "event",
+          "referenced_column": "id"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "eventID",
+          "referenced_table": "event",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 2
+    },
+    {
+      "name": "event",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "terrain_id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "terrain",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "details",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "name",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "full_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "full_name",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "start_date",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "end_date",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "reward",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": {
+        "terrain_id": {
+          "referenced_table": "terrain",
+          "referenced_column": "id"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "terrain_id",
+          "referenced_table": "terrain",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 1
+    },
+    {
+      "name": "terrain",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "court_type",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "location",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "name",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "full_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "full_name",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "status",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "latitude",
+          "sql_type": "DOUBLE",
+          "python_type": "float",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "float_number",
+          "method_params": {
+            "start": 1,
+            "end": 1000,
+            "precision": 2
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "longitude",
+          "sql_type": "DOUBLE",
+          "python_type": "float",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "float_number",
+          "method_params": {
+            "start": 1,
+            "end": 1000,
+            "precision": 2
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": {},
+      "relationships": [],
+      "estimated_complexity": "high",
+      "generation_order_priority": 0
+    },
+    {
+      "name": "doctrine_migration_versions",
+      "columns": [
+        {
+          "name": "version",
+          "sql_type": "VARCHAR(191)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": 191,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY",
+            "MAX_LENGTH(191)"
+          ]
+        },
+        {
+          "name": "executed_at",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        },
+        {
+          "name": "execution_time",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "integer_number",
+          "method_params": {
+            "start": 1,
+            "end": 100000
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        }
+      ],
+      "primary_keys": [
+        "version"
+      ],
+      "foreign_keys": {},
+      "relationships": [],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 13
+    },
+    {
+      "name": "emprunt",
+      "columns": [
+        {
+          "name": "userid",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "utilisateur",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "empruntID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "dateEmprunt",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "dateRetour",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "statutEmprunt",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "materielID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "materiel",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "empruntID"
+      ],
+      "foreign_keys": {
+        "userid": {
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID"
+        },
+        "materielID": {
+          "referenced_table": "materiel",
+          "referenced_column": "ID"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "userid",
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        },
+        {
+          "type": "foreign_key",
+          "local_column": "materielID",
+          "referenced_table": "materiel",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 14
+    },
+    {
+      "name": "materiel",
+      "columns": [
+        {
+          "name": "ID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "type",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "typeSport",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "prix",
+          "sql_type": "DOUBLE",
+          "python_type": "float",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "financial",
+          "provider_type": "numbers",
+          "mimesis_method": "float_number",
+          "method_params": {
+            "start": 1,
+            "end": 1000,
+            "precision": 2
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "price",
+          "constraints": []
+        },
+        {
+          "name": "dateReservation",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        },
+        {
+          "name": "statut",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "ownerType",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "signaler",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "integer_number",
+          "method_params": {
+            "start": 1,
+            "end": 100000
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        }
+      ],
+      "primary_keys": [
+        "ID"
+      ],
+      "foreign_keys": {},
+      "relationships": [],
+      "estimated_complexity": "high",
+      "generation_order_priority": 6
+    },
+    {
+      "name": "utilisateur",
+      "columns": [
+        {
+          "name": "ID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "email",
+          "sql_type": "VARCHAR(180)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 180,
+          "default_value": null,
+          "data_category": "contact",
+          "provider_type": "person",
+          "mimesis_method": "email",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "email",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(180)"
+          ]
+        },
+        {
+          "name": "motdepasse",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "person",
+          "mimesis_method": "password",
+          "method_params": {
+            "length": 12
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "password",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "genre",
+          "sql_type": "VARCHAR(50)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 50,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "sentence",
+          "method_params": {
+            "nb_words": 3
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(50)"
+          ]
+        },
+        {
+          "name": "prenom",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "first_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "first_name",
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "nom",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "last_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "last_name",
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "numeroTelephone",
+          "sql_type": "VARCHAR(50)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 50,
+          "default_value": null,
+          "data_category": "contact",
+          "provider_type": "person",
+          "mimesis_method": "telephone",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "phone",
+          "constraints": [
+            "MAX_LENGTH(50)"
+          ]
+        },
+        {
+          "name": "adresse",
+          "sql_type": "LONGTEXT",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "address",
+          "provider_type": "address",
+          "mimesis_method": "address",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "address",
+          "constraints": []
+        },
+        {
+          "name": "photoProfil",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "nomOrganisation",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "last_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "last_name",
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "roleID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "role",
+            "referenced_column": "roleID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "ID"
+      ],
+      "foreign_keys": {
+        "roleID": {
+          "referenced_table": "role",
+          "referenced_column": "roleID"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "roleID",
+          "referenced_table": "role",
+          "referenced_column": "roleID",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 4
+    },
+    {
+      "name": "role",
+      "columns": [
+        {
+          "name": "roleID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "roleNom",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "last_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "last_name",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "roleID"
+      ],
+      "foreign_keys": {},
+      "relationships": [],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 3
+    },
+    {
+      "name": "maintenance",
+      "columns": [
+        {
+          "name": "maintenanceID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "dateMaintenance",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "description",
+          "sql_type": "TEXT",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "internet",
+          "mimesis_method": "ip_v4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "ip_address",
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "statutMaintenance",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "materielID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "materiel",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "maintenanceID"
+      ],
+      "foreign_keys": {
+        "materielID": {
+          "referenced_table": "materiel",
+          "referenced_column": "ID"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "materielID",
+          "referenced_table": "materiel",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 7
+    },
+    {
+      "name": "messenger_messages",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "BIGINT",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "body",
+          "sql_type": "LONGTEXT",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "headers",
+          "sql_type": "LONGTEXT",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "queue_name",
+          "sql_type": "VARCHAR(190)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 190,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(190)"
+          ]
+        },
+        {
+          "name": "created_at",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "created_at",
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "available_at",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "delivered_at",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": {},
+      "relationships": [],
+      "estimated_complexity": "high",
+      "generation_order_priority": 8
+    },
+    {
+      "name": "reservation",
+      "columns": [
+        {
+          "name": "utilisateurid",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "utilisateur",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "tournoiid",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "tournoi",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "ID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "dateReservation",
+          "sql_type": "DATETIME",
+          "python_type": "datetime",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "datetime",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": []
+        },
+        {
+          "name": "statut",
+          "sql_type": "VARCHAR(20)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 20,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "sentence",
+          "method_params": {
+            "nb_words": 3
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(20)"
+          ]
+        },
+        {
+          "name": "type",
+          "sql_type": "VARCHAR(20)",
+          "python_type": "str",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 20,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "sentence",
+          "method_params": {
+            "nb_words": 3
+          },
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": null,
+          "constraints": [
+            "MAX_LENGTH(20)"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "ID"
+      ],
+      "foreign_keys": {
+        "utilisateurid": {
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID"
+        },
+        "tournoiid": {
+          "referenced_table": "tournoi",
+          "referenced_column": "id"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "utilisateurid",
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        },
+        {
+          "type": "foreign_key",
+          "local_column": "tournoiid",
+          "referenced_table": "tournoi",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 11
+    },
+    {
+      "name": "tournoi",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "nom",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "personal",
+          "provider_type": "person",
+          "mimesis_method": "last_name",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "last_name",
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "dateDebut",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "dateFin",
+          "sql_type": "DATE",
+          "python_type": "date",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "temporal",
+          "provider_type": "datetime",
+          "mimesis_method": "date",
+          "method_params": {
+            "start": 2020,
+            "end": 2024
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "lieu",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "typeSport",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "statut",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "recompense",
+          "sql_type": "VARCHAR(255)",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": 255,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "MAX_LENGTH(255)"
+          ]
+        },
+        {
+          "name": "eventId",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "event",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": {
+        "eventId": {
+          "referenced_table": "event",
+          "referenced_column": "id"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "eventId",
+          "referenced_table": "event",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "high",
+      "generation_order_priority": 9
+    },
+    {
+      "name": "reservation_billet",
+      "columns": [
+        {
+          "name": "reservationID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": {
+            "refrenced_table": "reservation",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY",
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "billetID",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": {
+            "refrenced_table": "billet",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY",
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "reservationID",
+        "billetID"
+      ],
+      "foreign_keys": {
+        "reservationID": {
+          "referenced_table": "reservation",
+          "referenced_column": "ID"
+        },
+        "billetID": {
+          "referenced_table": "billet",
+          "referenced_column": "ID"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "reservationID",
+          "referenced_table": "reservation",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        },
+        {
+          "type": "foreign_key",
+          "local_column": "billetID",
+          "referenced_table": "billet",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 12
+    },
+    {
+      "name": "review",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "user_id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "utilisateur",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "event_id",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": true,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": {
+            "refrenced_table": "event",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "custom",
+          "mimesis_method": "uuid4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.1,
+          "pattern_detected": "uuid",
+          "constraints": [
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "comment",
+          "sql_type": "LONGTEXT",
+          "python_type": "str",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "text",
+          "mimesis_method": "text",
+          "method_params": {
+            "quantity": 1
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        },
+        {
+          "name": "rating",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "integer_number",
+          "method_params": {
+            "start": 1,
+            "end": 100000
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": {
+        "user_id": {
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID"
+        },
+        "event_id": {
+          "referenced_table": "event",
+          "referenced_column": "id"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "user_id",
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        },
+        {
+          "type": "foreign_key",
+          "local_column": "event_id",
+          "referenced_table": "event",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 5
+    },
+    {
+      "name": "tournoi_participants",
+      "columns": [
+        {
+          "name": "tournois",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": {
+            "refrenced_table": "tournoi",
+            "referenced_column": "id"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "generic",
+          "provider_type": "numbers",
+          "mimesis_method": "integer_number",
+          "method_params": {
+            "start": 1,
+            "end": 100000
+          },
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": null,
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY",
+            "FOREIGN KEY"
+          ]
+        },
+        {
+          "name": "participants",
+          "sql_type": "INTEGER",
+          "python_type": "int",
+          "nullable": false,
+          "unique": true,
+          "primary_key": true,
+          "foreign_key": {
+            "refrenced_table": "utilisateur",
+            "referenced_column": "ID"
+          },
+          "max_length": null,
+          "default_value": null,
+          "data_category": "technical",
+          "provider_type": "internet",
+          "mimesis_method": "ip_v4",
+          "method_params": {},
+          "custom_values": null,
+          "null_probability": 0.0,
+          "pattern_detected": "ip_address",
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY",
+            "FOREIGN KEY"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "tournois",
+        "participants"
+      ],
+      "foreign_keys": {
+        "tournois": {
+          "referenced_table": "tournoi",
+          "referenced_column": "id"
+        },
+        "participants": {
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID"
+        }
+      },
+      "relationships": [
+        {
+          "type": "foreign_key",
+          "local_column": "tournois",
+          "referenced_table": "tournoi",
+          "referenced_column": "id",
+          "relationship_type": "many_to_one"
+        },
+        {
+          "type": "foreign_key",
+          "local_column": "participants",
+          "referenced_table": "utilisateur",
+          "referenced_column": "ID",
+          "relationship_type": "many_to_one"
+        }
+      ],
+      "estimated_complexity": "medium",
+      "generation_order_priority": 10
+    }
+  ],
+  "relationships_graph": {
+    "billet": [
+      "event"
+    ],
+    "event": [
+      "terrain"
+    ],
+    "terrain": [],
+    "doctrine_migration_versions": [],
+    "emprunt": [
+      "utilisateur",
+      "materiel"
+    ],
+    "materiel": [],
+    "utilisateur": [
+      "role"
+    ],
+    "role": [],
+    "maintenance": [
+      "materiel"
+    ],
+    "messenger_messages": [],
+    "reservation": [
+      "tournoi",
+      "utilisateur"
+    ],
+    "tournoi": [
+      "event"
+    ],
+    "reservation_billet": [
+      "billet",
+      "reservation"
+    ],
+    "review": [
+      "event",
+      "utilisateur"
+    ],
+    "tournoi_participants": [
+      "tournoi",
+      "utilisateur"
+    ]
+  },
+  "generation_order": [
+    "terrain",
+    "event",
+    "billet",
+    "role",
+    "utilisateur",
+    "review",
+    "materiel",
+    "maintenance",
+    "messenger_messages",
+    "tournoi",
+    "tournoi_participants",
+    "reservation",
+    "reservation_billet",
+    "doctrine_migration_versions",
+    "emprunt"
+  ],
+  "suggested_locales": [
+    "TN",
+    "EN"
+  ],
+  "total_complexity_score": 261,
+  "analysis_metadata": {
+    "analysis_timestamp": "2025-06-25T13:33:57.794947",
+    "total_tables": 15,
+    "total_columns": 87,
+    "default_locale": "TN",
+    "patterns_detected": {
+      "uuid": 25,
+      "price": 2,
+      "full_name": 2,
+      "email": 1,
+      "password": 1,
+      "first_name": 1,
+      "last_name": 4,
+      "phone": 1,
+      "address": 1,
+      "ip_address": 2,
+      "created_at": 1
+    }
+  }
+}
