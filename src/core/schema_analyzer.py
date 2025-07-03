@@ -239,7 +239,7 @@ class SchemaAnalyser:
                 'params': {}
             },
             'uuid': {
-                'patterns': [r'.*uuid.*', r'.*guid.*', r'.*id.*'],
+                'patterns': [r'.*uuid.*', r'.*guid.*'],#, r'.*id.*'
                 'category': DataCategory.TECHNICAL,
                 'provider': ProviderType.CUSTOM,
                 'method': 'uuid4',

@@ -1,4 +1,3 @@
-from re import L
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 from dataclasses import dataclass
 import random
@@ -231,14 +230,24 @@ class DataGenerator:
         params = column_config.get('params', {})
 
         provider_mapping = {
-            'person': 'person',
-            'address': 'address',
-            'datetime': 'datetime',
-            'text': 'text',
-            'internet': 'internet',
-            'finance': 'finance',
-            'numeric': 'numeric',
-            'custom': 'generic'
+            'person':      'person',     
+            'address':     'address',    
+            'datetime':    'datetime',   
+            'text':        'text',       
+            'internet':    'internet',   
+            'finance':     'finance',    
+            'numbers':     'numeric',    
+            'custom':      'generic',    
+            'business':    'business',   
+            'food':        'food',       
+            'science':     'science',    
+            'file':        'file',       
+            'path':        'path',       
+            'hardware':    'hardware',   
+            'code':        'code',       
+            'development': 'development',
+            'transport':   'transport',  
+            'payment':     'payment',    
         }
 
         provider_name = provider_mapping.get(provider_type, 'text')
@@ -247,7 +256,6 @@ class DataGenerator:
         try:
             if hasattr(provider, method):
                 method_func = getattr(provider, method)
-
                 if method in ['integer_number', 'float_number']:
                     start = params.get('start', 1)
                     end = params.get('end', 1000)
@@ -329,7 +337,7 @@ class DataGenerator:
             if self._should_use_faker(column_name,column_config):
                 value = self._generate_with_faker(column_name,column_config)
             else:
-                 value = self._generate_with_mimesis(column_name,column_config)
+                value = self._generate_with_mimesis(column_name,column_config)
 
             if column_config.get('method') == 'uuid4':
                 value = str(uuid.uuid4())
