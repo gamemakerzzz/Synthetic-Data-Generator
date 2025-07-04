@@ -66,7 +66,7 @@ class ExportResult:
 
 class DataExporter:
     SUPPORTED_FILE_FORMATS = ['json', 'csv', 'excel', 'parquet', 'jsonl']
-    SUPPORTED_DATABASES = ['mysql', 'postgresql', 'sqlite', 'mssql', 'oracle'] 
+    SUPPORTED_DATABASES = ['mysql', 'postgresql', 'sqlite', 'mssql', 'oracle']
 
     def __init__(self, generated_data: Dict[str, List[Dict[str, Any]]],
                  config: Optional[Dict] = None):
